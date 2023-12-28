@@ -42,6 +42,26 @@ class Boid {
         triangle(x1, y1, x2, y2, x3, y3);
     }
 
+    resetAcceleration(){
+        this.acc = new createVector(0, 0);
+    }
+
+    evadeWalls() {
+        let dx = [0         , this.pos.x, width     , this.pos.x];
+        let dy = [this.pos.y, 0         , this.pos.y, height];
+        for(let i=0; i<4; i++){
+            let dist = this.pos.dist(new createVector(dx[i], dy[i]));
+            let v = new createVector(-dx[i], -dy[i]);
+            v.add(this.pos);
+            v.normalize();
+            if(dist > 0){
+                v.div(dist*dist*dist*dist);
+                v.mult(1000000);
+            }
+            this.acc.add(v);
+        }
+    }
+
     applyForce() {}
     
     moveFrom(x, y) {

@@ -4,8 +4,6 @@ class Normal extends Boid {
     }
 
     applyForce() {
-        this.acc = new createVector(0, 0);
-
         let total_cohesion = 0;
         let total_alignment = 0;
         let total_separation = 0;

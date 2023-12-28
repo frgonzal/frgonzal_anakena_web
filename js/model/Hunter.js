@@ -11,7 +11,6 @@ class Hunter extends Boid {
     }
     
     applyForce() {
-        this.acc = new createVector(0, 0);
         let total_separation = 0;
         let separation = new createVector(0, 0);
 

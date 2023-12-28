@@ -27,7 +27,9 @@ function draw() {
 
 
     for(const hunter of hunters){
-        hunter.applyForce()
+        hunter.resetAcceleration();
+        hunter.evadeWalls();
+        hunter.applyForce();
         if (mouseIsPressed)
             hunter.moveFrom(mouseX, mouseY);
 
@@ -36,6 +38,8 @@ function draw() {
     }
 
     for(const boid of boids){
+        boid.resetAcceleration();
+        boid.evadeWalls();
         boid.applyForce();
 
         if (mouseIsPressed)
