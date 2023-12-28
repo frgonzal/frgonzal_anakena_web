@@ -1,8 +1,10 @@
 const width  = window.screen.width;
 const height = window.screen.height;
 
-const numberOfBoids   = (width * height) / (100*100);
-const numberOfHunters = numberOfBoids / 100;
+const numberOfBoids   = parseInt((width * height) / (60*60));
+const numberOfHunters = parseInt(numberOfBoids / 100);
+
+console.log(numberOfBoids);
 
 const boids   = [];
 const hunters = [];

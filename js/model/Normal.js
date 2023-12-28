@@ -25,7 +25,7 @@ class Normal extends Boid {
             }
 
             //alignment 
-            if(dist < 100){
+            if(dist < 80){
                 alignment.add(boid.spd);
                 total_alignment++;
             }
@@ -33,28 +33,33 @@ class Normal extends Boid {
             if(dist < 60){
                 let diff = new createVector(-boid.pos.x, -boid.pos.y);
                 diff.add(this.pos);
-                diff.normalize();
 
-                diff.div(dist);
-                diff.mult(2500);
-
+                diff.div(dist*dist);
                 separation.add(diff);
                 total_separation++;
             }
         }
         
-        if(total_cohesion > 1)
+        if(total_cohesion > 1){
             cohesion.div(total_cohesion);
-        cohesion.sub(this.pos);
-        this.acc.add(cohesion);
+            cohesion.sub(this.pos);
+
+            cohesion.normalize();
+            cohesion.mult(100);
+            this.acc.add(cohesion);
+        }
         
-        if(total_alignment > 1)
-            alignment.div(total_alignment);
-        this.acc.add(alignment);
+        if(total_alignment > 1){
+            alignment.normalize();
+            alignment.mult(100);
+            this.acc.add(alignment);
+        }
         
-        if(total_separation > 1)
-            separation.div(total_separation);
-        this.acc.add(separation);
+        if(total_separation > 1){
+            separation.normalize();
+            separation.mult(120);
+            this.acc.add(separation);
+        }
         
 
         //---------------------------------------
@@ -62,20 +67,20 @@ class Normal extends Boid {
         separation = new createVector(0, 0);
         for(const hunter of hunters){
             let dist = this.pos.dist(hunter.pos)
-            if(dist < 100){
+            if(dist < 60){
                 let diff = new createVector(-hunter.pos.x, -hunter.pos.y);
                 diff.add(this.pos);
 
-                diff.normalize();
                 diff.div(dist*dist);
-                diff.mult(200000);
+
                 separation.add(diff);
                 total++;
             }
         }
-
-        if(total > 0)
-            separation.div(total);
-        this.acc.add(separation);
+        if(total > 0){
+            separation.normalize();
+            separation.mult(10000);
+            this.acc.add(separation);
+        }
     }
 }
